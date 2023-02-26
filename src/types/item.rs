@@ -11,40 +11,71 @@
 ///   "slot": 0
 /// }
 /// ```
-#[allow(dead_code)]
 #[derive(Debug)]
-pub struct Item {
-    id: String,
-    nbt: String,
-    lore: Vec<String>,
+pub enum Item {
+    /// Vanilla MC item. String is the id.
+    VanillaItem(String),
+    /// Custom item from the Rustfire Database.
+    CustomItem(String),
+    /// Text Item
+    Text(String),
+    /// Number Item
+    Number(i32),
+    /// Variable Item
+    Variable(String)
+
 }
 
-/*
-{
-            "item": {
-              "id": "item",
-              "data": {
-                "item": "{Count:1b,DF_NBT:3120,id:\"minecraft:iron_sword\",tag:{Damage:0,display:{Lore:['{\"extra\":[{\"bold\":false,\"italic\":false,\"underlined\":false,\"strikethrough\":false,\"obfuscated\":false,\"color\":\"gray\",\"text\":\"Lore Line 1\"}],\"text\":\"\"}','{\"extra\":[{\"bold\":false,\"italic\":false,\"underlined\":false,\"strikethrough\":false,\"obfuscated\":false,\"color\":\"aqua\",\"text\":\"Lore Line 2\"}],\"text\":\"\"}'],Name:'{\"extra\":[{\"bold\":false,\"italic\":false,\"underlined\":false,\"strikethrough\":false,\"obfuscated\":false,\"color\":\"white\",\"text\":\"Item Name Here\"}],\"text\":\"\"}'}}}"
-              }
-            },
-            "slot": 0
-          }
- */
-
-#[allow(dead_code)]
 impl Item {
-    pub fn as_str(&self) -> String {
-        format!(
-            "{{
-                \"item\": {{
-                  \"id\": \"item\",
-                  \"data\": {{
-                    \"item\": \"{{Count:1b,DF_NBT:3120,id:\"{}\",tag:{{ {} }}}}\"
-                  }}
-                }},
-                \"slot\": 0
-              }}",
-            self.id, self.nbt
-        )
+    pub fn as_str(&self, slot: i32) -> String {
+        /*  */
+        match &self {
+            Item::VanillaItem(id) => {
+                format!(
+                  "{{
+                      \"item\": {{
+                        \"id\": \"item\",
+                        \"data\": {{
+                          \"item\": \"{{Count:1b,DF_NBT:3120,id:\\\"{id}\\\",tag:{{ Damage:1b }}}}\"
+                        }}
+                      }},
+                      \"slot\": {slot}
+                    }}"
+                )
+            },
+            Item::Text(text) => {
+                let value2 = text.replace("&", "§");
+                format!(
+                    "{{
+                      \"item\": {{
+                        \"id\": \"txt\",
+                        \"data\": {{
+                          \"name\": \"{value2}\"
+                        }}
+                      }},
+                      \"slot\": {slot}
+                    }}"
+                )
+            }
+            _ => { todo!("unfinished item"); }
+        }
     }
 }
+
+pub fn item_from_string(input: std::string::String) -> Item {
+    if input.starts_with("vanilla::") {
+        let input2 = input.replace("vanilla::", "");
+        return Item::VanillaItem(format!("minecraft:{input2}"));
+    }
+    if input.starts_with("custom::") {
+      let input2 = input.replace("custom::", "");
+      return Item::VanillaItem(format!("{input2}"));
+    }
+    if input.starts_with("text::") {
+      let input2 = input.replace("text::", "");
+      return Item::Text(format!("{input2}"));
+    }
+    Item::VanillaItem(String::from("air"))
+}
+
+

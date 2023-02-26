@@ -1,6 +1,0 @@
-use rustfire::*;
-
-fn player_join() {
-    player_event!(join);
-    player_action!(send_message "Hello %default!");
-}
