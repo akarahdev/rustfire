@@ -14,16 +14,25 @@
 #[derive(Debug)]
 pub enum Item {
     /// Vanilla MC item. String is the id.
-    VanillaItem(String),
+    VanillaItem(&'static str),
+    /// Vanilla MC item. String is the id. I32 is amount.
+    VanillaItemStack(&'static str, i32),
     /// Custom item from the Rustfire Database.
-    CustomItem(String),
+    CustomItem(&'static str),
     /// Text Item
-    Text(String),
+    Text(&'static str),
     /// Number Item
     Number(i32),
     /// Variable Item
-    Variable(String)
-
+    GlobalVariable(&'static str),
+    /// Variable Item
+    LocalVariable(&'static str),
+    /// Variable Item
+    SavedVariable(&'static str),
+    /// Location Item
+    Location(i32, i32, i32),
+    /// Location Item with more fields
+    ExtendedLocation(i32, i32, i32, i32, i32),
 }
 
 impl Item {
@@ -36,13 +45,26 @@ impl Item {
                       \"item\": {{
                         \"id\": \"item\",
                         \"data\": {{
-                          \"item\": \"{{Count:1b,DF_NBT:3120,id:\\\"{id}\\\",tag:{{ Damage:1b }}}}\"
+                          \"item\": \"{{Count:1b,DF_NBT:3120,id:\\\"{id}\\\",tag:{{ Unbreakable:1b }}}}\"
                         }}
                       }},
                       \"slot\": {slot}
                     }}"
                 )
-            },
+            }
+            Item::VanillaItemStack(id, count) => {
+                format!(
+                "{{
+                    \"item\": {{
+                      \"id\": \"item\",
+                      \"data\": {{
+                        \"item\": \"{{Count:{count}b,DF_NBT:3120,id:\\\"{id}\\\",tag:{{ Unbreakable:1b }}}}\"
+                      }}
+                    }},
+                    \"slot\": {slot}
+                  }}"
+              )
+            }
             Item::Text(text) => {
                 let value2 = text.replace("&", "§");
                 format!(
@@ -57,25 +79,105 @@ impl Item {
                     }}"
                 )
             }
-            _ => { todo!("unfinished item"); }
+            Item::Number(num) => {
+                format!(
+                    "{{
+                  \"item\": {{
+                    \"id\": \"num\",
+                    \"data\": {{
+                      \"name\": \"{num}\"
+                    }}
+                  }},
+                  \"slot\": {slot}
+                }}
+                "
+                )
+            }
+            Item::GlobalVariable(var) => {
+                format!(
+                    "{{
+                  \"item\": {{
+                    \"id\": \"var\",
+                    \"data\": {{
+                      \"name\": \"{var}\",
+                      \"scope\": \"unsaved\"
+                    }}
+                  }},
+                  \"slot\": {slot}
+                }}"
+                )
+            }
+            Item::LocalVariable(var) => {
+                format!(
+                    "{{
+                \"item\": {{
+                  \"id\": \"var\",
+                  \"data\": {{
+                    \"name\": \"{var}\",
+                    \"scope\": \"local\"
+                  }}
+                }},
+                \"slot\": {slot}
+              }}"
+                )
+            }
+            Item::SavedVariable(var) => {
+                format!(
+                    "{{
+              \"item\": {{
+                \"id\": \"var\",
+                \"data\": {{
+                  \"name\": \"{var}\",
+                  \"scope\": \"saved\"
+                }}
+              }},
+              \"slot\": {slot}
+            }}"
+                )
+            }
+            Item::Location(x, y, z) => {
+                format!(
+                    "
+                {{
+                  \"item\": {{
+                    \"id\": \"loc\",
+                    \"data\": {{
+                      \"isBlock\": false,
+                      \"loc\": {{
+                        \"x\": {x},
+                        \"y\": {y},
+                        \"z\": {z},
+                        \"pitch\": 0,
+                        \"yaw\": 0
+                      }}
+                    }}
+                  }}
+                "
+                )
+            }
+            Item::ExtendedLocation(x, y, z, pitch, yaw) => {
+                format!(
+                    "
+              {{
+                \"item\": {{
+                  \"id\": \"loc\",
+                  \"data\": {{
+                    \"isBlock\": false,
+                    \"loc\": {{
+                      \"x\": {x},
+                      \"y\": {y},
+                      \"z\": {z},
+                      \"pitch\": {pitch},
+                      \"yaw\": {yaw}
+                    }}
+                  }}
+                }}
+              "
+                )
+            }
+            _ => {
+                todo!("unfinished item");
+            }
         }
     }
 }
-
-pub fn item_from_string(input: std::string::String) -> Item {
-    if input.starts_with("vanilla::") {
-        let input2 = input.replace("vanilla::", "");
-        return Item::VanillaItem(format!("minecraft:{input2}"));
-    }
-    if input.starts_with("custom::") {
-      let input2 = input.replace("custom::", "");
-      return Item::VanillaItem(format!("{input2}"));
-    }
-    if input.starts_with("text::") {
-      let input2 = input.replace("text::", "");
-      return Item::Text(format!("{input2}"));
-    }
-    Item::VanillaItem(String::from("air"))
-}
-
-

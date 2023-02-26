@@ -1,4 +1,4 @@
-# Rustfire
+# Rustfire 0.3.0
 ![open issues](https://img.shields.io/github/issues-raw/akarahdev/rustfire?style=plastic)
 ![rustfire version](https://img.shields.io/crates/v/rustfire?style=plastic)
 ![maintain status](https://img.shields.io/maintenance/yes/2023?style=plastic)
@@ -39,24 +39,32 @@ finally:
 This code opens a socket on 31372 for RustFire to send templates through. This will later be implemented as base into RustFire.
 # Usage
 Here is a basic program written in RustFire.
+
 ```rust
+// Import Boilerplate for RustFire. Recommended in all projects to minimize boilerplate.
 use rustfire::*;
+use rustfire::build::build::{BuildFlags, rf_build_flags};
+use rustfire::types::item::Item;
+use rustfire::build::build::build;
 
 // Code to be ran. This is usually split into multiple functions.
 fn main() {
-    build_set!("Player Join Event"); // Template name. System will soon be reworked.
-    player_event!(join); // Player Join Event. 
-    select!(all_players); // Select all players. By default, all codeblocks have the Selection target. This system will be reworked soon.
-    player_action!(send_message "text::&a&lJOINED! &e%default &7has joined!"); // Send the player a message
-    build!(); // Send code to Recode.
+    // build flags so the RustFire compiler knows things
+    rf_build_flags(BuildFlags {
+        template_name: "Join with Parameters"
+    });
+    player_event!(Join); // join event
+    target!(AllPlayers); // change targeting to all players
+    player_action!(SendMessage Item::Text("&a%default &7has joined!")); // send message to all players
+    target!(Default); // change targeting to default / none
+    function!(CallParams "PVPKit", Item::Text("StandardKit")); // call function with parameters
+    build(); // build function
 }
 ```
 Check the examples directory for more examples.
 
 # Contribution
 Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.
-
-Please make sure to update tests as appropriate.
 
 # License
 This project falls under the MIT license. Read it at `LICENSE.txt`

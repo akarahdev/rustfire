@@ -1,4 +1,4 @@
-use crate::types::item::Item;
+use crate::{rustfire_current_target, types::item::Item};
 
 /// In DF's JSON, a block looks something like this.
 /// ```
@@ -29,15 +29,17 @@ impl Block {
         let mut item_index = 0;
         for item in &self.items {
             item_index += 1;
-            item_string.push_str(&item.as_str(item_index).to_owned());
+            item_string.push_str(&item.as_str(item_index - 1).to_owned());
             if &(item_index as usize) != &self.items.len() {
                 item_string.push(',');
             }
         }
 
         let minified = minifier::json::minify(item_string.as_str()).to_string();
-        String::from(format!(
-            "
+        // $crate::rustfire_current_target
+        unsafe {
+            String::from(format!(
+                "
             {{
              \"id\": \"block\",
              \"block\": \"{}\",
@@ -48,10 +50,11 @@ impl Block {
              }},
              \"action\": \"{}\",
              \"data\": \"{}\",
-             \"target\": \"Selection\"
+             \"target\": \"{}\"
           }}
         ",
-            self.block, minified, self.action, self.data
-        ))
+                self.block, minified, self.action, self.data, rustfire_current_target
+            ))
+        }
     }
 }

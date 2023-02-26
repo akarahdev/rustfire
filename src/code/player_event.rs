@@ -8,78 +8,85 @@
 /// ```
 #[macro_export]
 macro_rules! player_event {
-    (join) => {
+    (Join) => {
+        let action_name = "Join";
         let bl = $crate::types::block::Block {
             block: String::from("event"),
-            action: String::from("Join"),
+            action: String::from(action_name),
             items: vec![],
-            data: String::new()
+            data: String::new(),
         };
         unsafe {
             $crate::code_blocks.push(bl);
         };
     };
-    (leave) => {
+    (Leave) => {
+        let action_name = "Leave";
         let bl = $crate::types::block::Block {
             block: String::from("event"),
-            action: String::from("Leave"),
+            action: String::from(action_name),
             items: vec![],
-            data: String::new()
+            data: String::new(),
         };
         unsafe {
             $crate::code_blocks.push(bl);
         };
     };
-    (right_click) => {
+    (RightClick) => {
+        let action_name = "RightClick";
         let bl = $crate::types::block::Block {
             block: String::from("event"),
-            action: String::from("RightClick"),
+            action: String::from(action_name),
             items: vec![],
-            data: String::new()
+            data: String::new(),
         };
         unsafe {
             $crate::code_blocks.push(bl);
         };
     };
-    (left_click) => {
+    (LeftClick) => {
+        let action_name = "LeftClick";
         let bl = $crate::types::block::Block {
             block: String::from("event"),
-            action: String::from("LeftClick"),
+            action: String::from(action_name),
             items: vec![],
-            data: String::new()
+            data: String::new(),
         };
         unsafe {
             $crate::code_blocks.push(bl);
         };
     };
-    (take_damage) => {
+    (TakeDamage) => {
+        let action_name = "PlayerTakeDmg";
         let bl = $crate::types::block::Block {
             block: String::from("event"),
-            action: String::from("PlayerTakeDmg"),
+            action: String::from(action_name),
             items: vec![],
-            data: String::new()
+            data: String::new(),
         };
         unsafe {
             $crate::code_blocks.push(bl);
         };
     };
-    (damage_player) => {
+    (DamagePlayer) => {
+        let action_name = "PlayerDmgPlayer";
         let bl = $crate::types::block::Block {
             block: String::from("event"),
-            action: String::from("PlayerDmgPlayer"),
+            action: String::from(action_name),
             items: vec![],
-            data: String::new()
+            data: String::new(),
         };
         unsafe {
             $crate::code_blocks.push(bl);
         };
     };
-    (kill_player) => {
+    (KillPlayer) => {
+        let action_name = "KillPlayer";
         let bl = $crate::types::block::Block {
             block: String::from("event"),
-            action: String::from("KillPlayer"),
+            action: String::from(action_name),
             items: vec![],
-            data: String::new()
+            data: String::new(),
         };
         unsafe {
             $crate::code_blocks.push(bl);

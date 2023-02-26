@@ -5,14 +5,17 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html) after version 1.0.0. Until 1.0.0 is released, assume each version is not backwards compatible unless specified.
 
 ## Roadmap
-### 0.4.0 and beyond
-- Syntax rework - currently the syntax is a bit messy and inconsistent.
-- Support for all values in codeblocks. Once this is added, adding in new blocks will be super easy to do. Could even be automated?
+### Guaranteed
+- Support for all values and all codeblocks. Once this is added, adding in new blocks will be super easy to do. Could even be automated?
+### Ideas
 - Removing the need for `scan.py` by having functionality built-in.
-## Unreleased [0.3.0]
-### Planned
+- Safety checks on certain codeblocks to make sure input is valid, like a linter for DF code.
+## 0.3.0
+### Added
 - Arguments are no longer passed in as `std::str`. Instead, they are passed in as `rustfire::item::Item`.
 - More events and codeblocks added.
+- Multiple item inputs are now allowed instead of just one.
+- You can now pass in parameters to functions using `function!(CallParams ...`! Eventually this will be mertged with the primary `function!(Call ...` 
 ## 0.2.0 - 2/26/23
 ### Added
 - Recode support, now it exports directly to Recode! However, it currently relies on `send.py` to work.
