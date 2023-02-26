@@ -18,4 +18,4 @@ pub static mut code_block_string: String = String::new();
 #[allow(non_upper_case_globals, dead_code)]
 pub static mut rustfire_functions: Vec<String> = Vec::new();
 #[allow(non_upper_case_globals, dead_code)]
-pub static mut rustfire_current_name: String = String::from("Unnamed Template");
+pub static mut rustfire_current_name: String = String::new();
