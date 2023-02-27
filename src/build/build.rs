@@ -2,7 +2,7 @@ use base64::Engine;
 
 /// Struct for managing build flags
 pub struct BuildFlags {
-    pub template_name: &'static str
+    pub template_name: &'static str,
 }
 
 /// Holds flags for build
@@ -13,6 +13,28 @@ pub fn rf_build_flags(bf: BuildFlags) {
     }
 }
 
+/// Macro for creating a code line.
+/// The first argument should be a `BuildFlags` struct.
+/// The second should be a callback of the code you wish to run.
+/// ```
+/// df!(
+///    BuildFlags {
+///        template_name: "Join with Parameters"
+///    },
+///    {
+///        player_event!(Join);
+///        player_action!(SendMessage Item::Text("Hello %default!"));
+///    }
+/// );
+/// ```
+#[macro_export]
+macro_rules! df {
+    ($build_flags:expr, $body:block) => {
+        rf_build_flags($build_flags);
+        $body
+        build();
+    };
+}
 /// Builds code you have created.
 pub fn build() {
     unsafe {
@@ -45,7 +67,7 @@ pub fn build() {
         let b64 = crate::base64::engine::general_purpose::STANDARD.encode(&compressed);
         // replace data with b64
         let name = &crate::rustfire_current_name;
-        let send_over = format!("{{\"type\":\"template\",\"source\":\"RustFire\",\"data\": \"{{\\\"name\\\":\\\"{name}\\\",\\\"data\\\":\\\"{b64}\\\"}}\"}}");
+        let send_over = format!("{{\"type\":\"template\",\"source\":\"RustFire\",\"data\": \"{{\\\"name\\\":\\\"§cRust§bFire §8>> §7{name}\\\",\\\"data\\\":\\\"{b64}\\\"}}\"}}");
         println!("\nFinished!");
         crate::code_blocks = vec![];
         crate::code_block_string = String::new();

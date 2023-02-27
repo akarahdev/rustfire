@@ -25,5 +25,5 @@ pub static mut rustfire_current_name: String = String::new();
 pub static mut rustfire_current_target: String = String::new();
 #[allow(non_upper_case_globals, dead_code)]
 pub static mut rustfire_build_flags: BuildFlags = BuildFlags {
-    template_name: "unnamed"
+    template_name: "unnamed",
 };

@@ -5,9 +5,11 @@
 ![docs status](https://img.shields.io/docsrs/rustfire/0.2.0?style=plastic)
 ![chat](https://img.shields.io/discord/1079430616082288680?style=plastic)
 
-**Note:** This project is **not** ready for full usage. Please refrain from main usage until 1.0.0. This is because syntax is constantly changing and new systems are being added/removed.
+**Note:** This project is **not** ready for full usage. Please refrain from usage on public plots until 1.0.0. This is because syntax is constantly changing and new systems are being added and removed. Also, this project is meant for use on a Minecraft server known as DiamondFire. This won't be very useful to you if you don't play on it.
 
-RustFire is a project coded in Rust. It allows users to create DiamondFire templates through the use of the Rust programming language. 
+RustFire is a project coded in Rust. It allows users to create DiamondFire code templates through the use of the Rust programming language. 
+
+
 
 # Installation
 You can either type the following into your command prompt:
