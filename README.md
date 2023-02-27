@@ -9,10 +9,31 @@
 
 RustFire is a project coded in Rust. It allows users to create DiamondFire code templates through the use of the Rust programming language. 
 
+# Rust Programming Language
+Since I know a lot of DiamondFire players don't know what Rust is or how to install it, I'll give a quick overview.
 
+Rust is a programming language that compiles to an executable. It's primary feature that I use here are macros - essentially code that generates more code. It also has a borrow checker system, with the following general rules:
 
-# Installation
-You can either type the following into your command prompt:
+> The borrow check is Rust's "secret sauce" – it is tasked with enforcing a number of properties:
+> - That all variables are initialized before they are used.
+> - That you can't move the same value twice.
+> - That you can't move a value while it is borrowed.
+> - That you can't access a place while it is mutably borrowed (except through the reference).
+> - That you can't mutate a place while it is immutably borrowed.
+> 
+> From the Rust Compiler Development Guide
+  
+It sounds very complex, I know. It's a bit hard to wrap your head around. Unless you implement Rust code with your DiamondFire code, you won't have to worry about it.
+
+## Installation
+Installing Rust is a bit strange. Follow the instructions on [https://www.rust-lang.org/tools/install](https://www.rust-lang.org/tools/install).
+
+## Project Setup
+Once the Rust Compiler is installed, at this point, I recommend you install [Visual Studio Code](https://code.visualstudio.com/download) and the [rust-analyzer](https://marketplace.visualstudio.com/items?itemName=rust-lang.rust-analyzer) VSCode plugin.
+After that, create a new folder and open it up in VSCode. Press Ctrl + Shift + \` to open a terminal. Once you're in there, type 'cargo init'. It will initialize a new Rust project in your current directory.
+
+# Installation of RustFire
+Once your project is setup, you can either type the following into your command prompt:
 ```
 cargo add rustfire
 ```
@@ -38,7 +59,8 @@ try:
 finally:
     sock.close()
 ```
-This code opens a socket on 31372 for RustFire to send templates through. This will later be implemented as base into RustFire.
+This code opens a socket on 31372 for RustFire to send templates through. This will later be implemented as base into RustFire and this step will be removed when that happens.
+
 # Usage
 Here is a basic program written in RustFire.
 
