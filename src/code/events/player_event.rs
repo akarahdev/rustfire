@@ -43,4 +43,7 @@ macro_rules! player_event {
     (KillPlayer) => {
         internal_player_event("KillPlayer");
     };
+    (Sneak) => {
+        internal_player_event("Sneak");
+    };
 }

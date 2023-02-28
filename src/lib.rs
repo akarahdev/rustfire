@@ -54,7 +54,10 @@ macro_rules! rf_imports {
         use rustfire::build::build::{BuildFlags, rf_build_flags};
         use rustfire::types::item::Item::*;
         use rustfire::build::build::build;
-        use rustfire::code::player_action::internal_make_player_action;
-        use rustfire::code::player_event::internal_player_event;
+        use rustfire::code::actions::player_action::internal_make_player_action;
+        use rustfire::code::actions::entity_action::internal_make_entity_action;
+        use rustfire::code::actions::set_variable::internal_make_set_variable;
+        use rustfire::code::actions::game_action::internal_make_game_action;
+        use rustfire::code::events::player_event::internal_player_event;
     };
 }

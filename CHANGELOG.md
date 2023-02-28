@@ -12,10 +12,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Safety checks on certain codeblocks to make sure input is valid, like a linter for DF code.
 ## 0.3.0
 ### Added
+- Added the `df!` macro to streamline building codelines. See `README.md` for more information.
 - Arguments are no longer passed in as `std::str`. Instead, they are passed in as `rustfire::item::Item`.
 - More events and codeblocks added.
 - Multiple item inputs are now allowed instead of just one.
 - You can now pass in parameters to functions using `function!(CallParams ...`! Eventually this will be mertged with the primary `function!(Call ...` 
+- Added atleast one copy of **every** codeblock.
+- Added variable support. Game values are upcoming.
 ## 0.2.0 - 2/26/23
 ### Added
 - Recode support, now it exports directly to Recode! However, it currently relies on `send.py` to work.

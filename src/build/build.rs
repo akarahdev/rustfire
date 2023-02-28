@@ -1,6 +1,7 @@
 use base64::Engine;
 
-use crate::{function, print::df_warn}; // rustfire_current_name};
+use crate::print::df_warn;
+use crate::function;
 
 /// Struct for managing build flags
 pub struct BuildFlags {
