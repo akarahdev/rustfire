@@ -94,4 +94,18 @@ Pull requests are welcome. For major changes, please open an issue first to disc
 This project falls under the MIT license. Read it at `LICENSE.txt`
 
 # Documentation
-coming soonTM
+Blocks Added:
+- [x] Player Event
+- [x] Player Action
+- [x] If Player
+- [ ] Entity Event
+- [x] Entity Action
+- [x] If Entity
+- [x] Game Action
+- [x] If Game
+- [x] Select Object
+- [x] Else
+- [x] Define Function
+- [x] Call Function
+- [ ] Start Process
+- [ ] Control Repeat
