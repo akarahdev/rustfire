@@ -1,8 +1,12 @@
 use base64::Engine;
 
+use crate::{function, print::df_warn}; // rustfire_current_name};
+
 /// Struct for managing build flags
 pub struct BuildFlags {
     pub template_name: &'static str,
+    pub build: bool,
+    pub length: i32
 }
 
 /// Holds flags for build
@@ -10,6 +14,28 @@ pub struct BuildFlags {
 pub fn rf_build_flags(bf: BuildFlags) {
     unsafe {
         crate::rustfire_current_name = bf.template_name.to_string();
+        crate::rustfire_is_building = bf.build;
+        crate::rustfire_max_length = bf.length;
+        crate::rustfire_build_flags = bf;
+    }
+}
+
+#[allow(dead_code)]
+pub fn check_for_lim() {
+    #[allow(unused_unsafe)]
+    unsafe {    
+        println!("Code Blocks: {} // Length: {}", crate::rustfire_code_blocks, crate::rustfire_max_length);
+        crate::rustfire_code_blocks += 1;
+        if crate::rustfire_code_blocks >= crate::rustfire_max_length  {
+            df_warn("Max code line length hit. Creating new line.");
+            crate::rustfire_code_blocks = 0;
+            crate::rustfire_code_warps += 1;
+            function!(Call format!("warp::{}", crate::rustfire_code_warps));
+            build();
+            crate::rustfire_current_name = crate::rustfire_current_name.replace(&format!("[w{}] ", crate::rustfire_code_warps-1), "");
+            crate::rustfire_current_name = format!("[w{}] {}", crate::rustfire_code_warps, crate::rustfire_current_name);
+            function!(Define format!("warp::{}", crate::rustfire_code_warps));
+        }
     }
 }
 
@@ -19,7 +45,8 @@ pub fn rf_build_flags(bf: BuildFlags) {
 /// ```
 /// df!(
 ///    BuildFlags {
-///        template_name: "Join with Parameters"
+///        template_name: "Join with Parameters",
+///        build: true
 ///    },
 ///    {
 ///        player_event!(Join);
@@ -31,6 +58,9 @@ pub fn rf_build_flags(bf: BuildFlags) {
 macro_rules! df {
     ($build_flags:expr, $body:block) => {
         rf_build_flags($build_flags);
+        if($build_flags.build == false) {
+            return;
+        }
         $body
         build();
     };
@@ -67,12 +97,10 @@ pub fn build() {
         let b64 = crate::base64::engine::general_purpose::STANDARD.encode(&compressed);
         // replace data with b64
         let name = &crate::rustfire_current_name;
-        let send_over = format!("{{\"type\":\"template\",\"source\":\"RustFire\",\"data\": \"{{\\\"name\\\":\\\"§cRust§bFire §8>> §7{name}\\\",\\\"data\\\":\\\"{b64}\\\"}}\"}}");
+        let send_over = format!("{{\"type\":\"template\",\"source\":\"RustFire\",\"data\": \"{{\\\"name\\\":\\\"[RF] {name}\\\",\\\"data\\\":\\\"{b64}\\\"}}\"}}");
         println!("\nFinished!");
         crate::code_blocks = vec![];
         crate::code_block_string = String::new();
-        crate::rustfire_current_name = String::new();
-        crate::rustfire_current_target = String::new();
         std::process::Command::new("python")
             .arg("send.py")
             .arg(send_over)

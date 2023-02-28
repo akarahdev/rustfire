@@ -18,6 +18,8 @@
 macro_rules! function {
     (Define $name:expr) => {
         let bl = $crate::types::block::Block {
+            id: "block",
+            direct: "not-applicable",
             block: String::from("func"),
             action: String::from(""),
             items: vec![],
@@ -29,6 +31,8 @@ macro_rules! function {
     };
     (Call $name:expr) => {
         let bl = $crate::types::block::Block {
+            id: "block",
+            direct: "not-applicable",
             block: String::from("call_func"),
             action: String::from(""),
             items: vec![],
@@ -42,6 +46,8 @@ macro_rules! function {
     // $($item),*
     (CallParams $func_name:expr, $($item:expr),*) => {
         let bl1 = $crate::types::block::Block {
+            id: "block",
+            direct: "not-applicable",
             block: String::from("set_var"),
             action: String::from("CreateList"),
             items: vec![
@@ -51,6 +57,8 @@ macro_rules! function {
             data: String::from($func_name),
         };
         let bl2 = $crate::types::block::Block {
+            id: "block",
+            direct: "not-applicable",
             block: String::from("call_func"),
             action: String::from(""),
             items: vec![],

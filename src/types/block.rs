@@ -16,6 +16,8 @@ use crate::{rustfire_current_target, types::item::Item};
 #[allow(dead_code)]
 #[derive(Debug)]
 pub struct Block {
+    pub id: &'static str,
+    pub direct: &'static str,
     pub block: String,
     pub action: String,
     pub data: String,
@@ -41,7 +43,9 @@ impl Block {
             String::from(format!(
                 "
             {{
-             \"id\": \"block\",
+             \"id\": \"{}\",
+             \"direct\": \"{}\",
+             \"type\": \"norm\",
              \"block\": \"{}\",
              \"args\": {{
                \"items\": [
@@ -53,7 +57,7 @@ impl Block {
              \"target\": \"{}\"
           }}
         ",
-                self.block, minified, self.action, self.data, rustfire_current_target
+                self.id, self.direct, self.block, minified, self.action, self.data, rustfire_current_target
             ))
         }
     }

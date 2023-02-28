@@ -6,90 +6,41 @@
 /// - right_click
 /// - left_click
 /// ```
+pub fn internal_player_event(action_name: &'static str) {
+    let bl = crate::types::block::Block {
+        id: "block",
+        direct: "not-applicable",
+        block: String::from("event"),
+        action: String::from(action_name),
+        items: vec![],
+        data: String::new(),
+    };
+    unsafe {
+        crate::code_blocks.push(bl);
+    };
+}
+
 #[macro_export]
 macro_rules! player_event {
     (Join) => {
-        let action_name = "Join";
-        let bl = $crate::types::block::Block {
-            block: String::from("event"),
-            action: String::from(action_name),
-            items: vec![],
-            data: String::new(),
-        };
-        unsafe {
-            $crate::code_blocks.push(bl);
-        };
+        internal_player_event("Join");
     };
     (Leave) => {
-        let action_name = "Leave";
-        let bl = $crate::types::block::Block {
-            block: String::from("event"),
-            action: String::from(action_name),
-            items: vec![],
-            data: String::new(),
-        };
-        unsafe {
-            $crate::code_blocks.push(bl);
-        };
+        internal_player_event("Leave");
     };
     (RightClick) => {
-        let action_name = "RightClick";
-        let bl = $crate::types::block::Block {
-            block: String::from("event"),
-            action: String::from(action_name),
-            items: vec![],
-            data: String::new(),
-        };
-        unsafe {
-            $crate::code_blocks.push(bl);
-        };
+        internal_player_event("RightClick");
     };
     (LeftClick) => {
-        let action_name = "LeftClick";
-        let bl = $crate::types::block::Block {
-            block: String::from("event"),
-            action: String::from(action_name),
-            items: vec![],
-            data: String::new(),
-        };
-        unsafe {
-            $crate::code_blocks.push(bl);
-        };
+        internal_player_event("LeftClick");
     };
     (TakeDamage) => {
-        let action_name = "PlayerTakeDmg";
-        let bl = $crate::types::block::Block {
-            block: String::from("event"),
-            action: String::from(action_name),
-            items: vec![],
-            data: String::new(),
-        };
-        unsafe {
-            $crate::code_blocks.push(bl);
-        };
+        internal_player_event("PlayerTakeDmg");
     };
     (DamagePlayer) => {
-        let action_name = "PlayerDmgPlayer";
-        let bl = $crate::types::block::Block {
-            block: String::from("event"),
-            action: String::from(action_name),
-            items: vec![],
-            data: String::new(),
-        };
-        unsafe {
-            $crate::code_blocks.push(bl);
-        };
+        internal_player_event("PlayerDmgPlayer");
     };
     (KillPlayer) => {
-        let action_name = "KillPlayer";
-        let bl = $crate::types::block::Block {
-            block: String::from("event"),
-            action: String::from(action_name),
-            items: vec![],
-            data: String::new(),
-        };
-        unsafe {
-            $crate::code_blocks.push(bl);
-        };
+        internal_player_event("KillPlayer");
     };
 }

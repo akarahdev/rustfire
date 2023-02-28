@@ -1,17 +1,20 @@
+pub fn make_select_object(action_name: &'static str) {
+    let bl = crate::types::block::Block { id: "block", direct: "not-applicable", block: String::from("select_obj"), action: String::from(action_name), items: vec![], data: String::new() };
+    unsafe { crate::code_blocks.push(bl);};
+}
+
 #[macro_export]
 macro_rules! select {
     (Default) => {
-        let action_name = "Default"
-        let bl = $crate::types::block::Block { block: String::from("select_obj"), action: String::from(action_name), items: vec![], data: String::new() };
-        unsafe { $crate::code_blocks.push(bl);};
+        make_select_object("Default");
     };
     (AllPlayers) => {
-        let action_name = "AllPlayers"
-        let bl = $crate::types::block::Block { block: String::from("select_obj"), action: String::from(action_name), items: vec![], data: String::new() };
-        unsafe { $crate::code_blocks.push(bl);};
+        make_select_object("AllPlayers");
     };
     (Player $player:expr) => {
         let bl = $crate::types::block::Block {
+            id: "block", 
+            direct: "not-applicable",
             block: String::from("select_obj"),
             action: String::from("PlayerName"),
             items: vec![
@@ -25,6 +28,8 @@ macro_rules! select {
     };
     (Entity $entity:expr) => {
         let bl = $crate::types::block::Block {
+            id: "block", 
+            direct: "not-applicable",
             block: String::from("select_obj"),
             action: String::from("EntityName"),
             items: vec![
@@ -43,6 +48,8 @@ macro_rules! target {
     (AllPlayers) => {
         let action = "AllPlayers";
         let bl = $crate::types::block::Block {
+            id: "block", 
+            direct: "not-applicable",
             block: String::from("RF_RESERVED::set_target"),
             action: String::from(action),
             items: vec![],
@@ -55,6 +62,8 @@ macro_rules! target {
     (Default) => {
         let action = "";
         let bl = $crate::types::block::Block {
+            id: "block", 
+            direct: "not-applicable",
             block: String::from("RF_RESERVED::set_target"),
             action: String::from(action),
             items: vec![],
@@ -67,6 +76,8 @@ macro_rules! target {
     (Killer) => {
         let action = "Killer";
         let bl = $crate::types::block::Block {
+            id: "block", 
+            direct: "not-applicable",
             block: String::from("RF_RESERVED::set_target"),
             action: String::from(action),
             items: vec![],
@@ -79,6 +90,8 @@ macro_rules! target {
     (Victim) => {
         let action = "Victim";
         let bl = $crate::types::block::Block {
+            id: "block", 
+            direct: "not-applicable",
             block: String::from("RF_RESERVED::set_target"),
             action: String::from(action),
             items: vec![],
@@ -91,6 +104,8 @@ macro_rules! target {
     (Damager) => {
         let action = "Damager";
         let bl = $crate::types::block::Block {
+            id: "block", 
+            direct: "not-applicable",
             block: String::from("RF_RESERVED::set_target"),
             action: String::from(action),
             items: vec![],
